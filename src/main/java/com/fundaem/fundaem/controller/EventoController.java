@@ -21,8 +21,8 @@ public class EventoController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/{creadorId}")
-    public ResponseEntity<EventoResponseDTO> crearEvento(@PathVariable Long creadorId, @Valid @RequestBody EventoRequestDTO request) {
-        EventoResponseDTO response = eventoService.crearEvento(request, creadorId);
+    public ResponseEntity<EventoResponseDTO> crearEvento(@Valid @RequestBody EventoRequestDTO request) {
+        EventoResponseDTO response = eventoService.crearEvento(request);
         return ResponseEntity.ok(response);
     }
 

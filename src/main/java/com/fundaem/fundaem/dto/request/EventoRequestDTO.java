@@ -25,4 +25,6 @@ public class EventoRequestDTO {
 
     @NotBlank(message = "La url de la imagen es obligatoria")
     private String imagenUrl;
+
+    private Long creador_id;
 }

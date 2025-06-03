@@ -12,7 +12,6 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class EventoResponseDTO {
-
     private Long id;
     private String titulo;
     private String descripcion;
@@ -20,4 +19,5 @@ public class EventoResponseDTO {
     private String imagenUrl;
     private Boolean activo;
     private String creadorNombre;
+    private Long creador_id;
 }

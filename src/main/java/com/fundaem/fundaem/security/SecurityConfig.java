@@ -36,7 +36,6 @@ public class SecurityConfig {
                         .requestMatchers(
                                 "/", "/index.html",
                                 "/css/**", "/js/**", "/img/**", "/video/**",
-                                "/**/*.jpg", "/**/*.png", "/**/*.mp4",
                                 "/api/auth/**", "/api/usuarios"
                         ).permitAll()
                         .anyRequest().authenticated()

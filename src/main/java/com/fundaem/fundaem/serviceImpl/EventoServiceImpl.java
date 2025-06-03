@@ -24,9 +24,9 @@ public class EventoServiceImpl  implements EventoService {
     private final ModelMapper modelMapper;
 
     @Override
-    public EventoResponseDTO crearEvento(EventoRequestDTO request, Long creadorId) {
+    public EventoResponseDTO crearEvento(EventoRequestDTO request) {
 
-        Usuario creador = usuarioRepository.findById(creadorId)
+        Usuario creador = usuarioRepository.findById(request.getCreador_id())
                 .orElseThrow(() -> new NotFoundException("Usuario no encontrado"));
 
         Evento evento = modelMapper.map(request, Evento.class);

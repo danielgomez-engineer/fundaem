@@ -1,6 +1,5 @@
 package com.fundaem.fundaem.service;
 
-
 import com.fundaem.fundaem.dto.request.EventoRequestDTO;
 import com.fundaem.fundaem.dto.response.EventoResponseDTO;
 
@@ -8,7 +7,7 @@ import java.util.List;
 
 public interface EventoService {
 
-    EventoResponseDTO crearEvento (EventoRequestDTO request, Long creadorId);
+    EventoResponseDTO crearEvento (EventoRequestDTO request);
 
     List<EventoResponseDTO> listarEventos();
 
@@ -17,7 +16,5 @@ public interface EventoService {
     void eliminarEvento(Long id);
 
     void actualizarEvento(Long id, EventoRequestDTO request);
-
-
 
 }
