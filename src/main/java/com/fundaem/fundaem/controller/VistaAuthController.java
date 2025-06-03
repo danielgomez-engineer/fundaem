@@ -8,11 +8,11 @@ public class VistaAuthController {
 
     @GetMapping("/login")
     public String mostrarLogin() {
-        return "login"; // templates/login.html
+        return "login";
     }
 
     @GetMapping("/register")
     public String mostrarRegistro() {
-        return "register"; // templates/register.html
+        return "register";
     }
 }

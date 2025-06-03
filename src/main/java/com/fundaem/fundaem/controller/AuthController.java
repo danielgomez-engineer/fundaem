@@ -23,6 +23,7 @@ public class AuthController {
     private final AuthenticationManager authenticationManager;
     private final JwtUtils jwtUtils;
     private final UsuarioRepository usuarioRepository;
+    private final com.fundaem.fundaem.service.UsuarioService usuarioService;
 
     @PostMapping("/login")
     public ResponseEntity<AuthResponseDTO> login(@RequestBody AuthRequestDTO request) {
@@ -35,4 +36,11 @@ public class AuthController {
 
         return ResponseEntity.ok(new AuthResponseDTO(token));
     }
+
+    @PostMapping("/register")
+    public ResponseEntity<com.fundaem.fundaem.dto.response.UsuarioResponseDTO> register(@RequestBody com.fundaem.fundaem.dto.request.UsuarioRequestDTO request) {
+        com.fundaem.fundaem.dto.response.UsuarioResponseDTO response = usuarioService.registrarUsuario(request);
+        return ResponseEntity.ok(response);
+    }
 }
+
