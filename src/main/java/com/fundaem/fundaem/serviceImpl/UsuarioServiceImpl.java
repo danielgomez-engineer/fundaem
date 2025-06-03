@@ -26,7 +26,15 @@ public class UsuarioServiceImpl implements UsuarioService {
     public UsuarioResponseDTO registrarUsuario(UsuarioRequestDTO request) {
         Usuario usuario = modelMapper.map(request, Usuario.class);
         usuario.setPassword(passwordEncoder.encode(request.getPassword()));
-        usuario.setRol(Rol.CLIENTE); // Por defecto, rol CLIENTE
+        // Asignar el rol recibido en el request (ADMIN o CLIENTE)
+        String rolStr = request.getRol();
+        Rol rolAsignado;
+        if (rolStr != null && rolStr.equalsIgnoreCase("ADMIN")) {
+            rolAsignado = Rol.ADMIN;
+        } else {
+            rolAsignado = Rol.CLIENTE;
+        }
+        usuario.setRol(rolAsignado);
         Usuario guardado = usuarioRepository.save(usuario);
         return modelMapper.map(guardado, UsuarioResponseDTO.class);
     }

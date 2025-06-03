@@ -37,10 +37,21 @@
 
         if (response.ok) {
             const data = await response.json();
-            // Guardas el token en localStorage (o cookie segura si luego lo deseas)
             localStorage.setItem('token', data.token);
-            // Redireccionas a la página principal o panel
-            window.location.href = '/eventos';
+            // Decodifica el JWT para obtener el rol
+            function parseJwt (token) {
+                try {
+                    return JSON.parse(atob(token.split('.')[1]));
+                } catch (e) {
+                    return null;
+                }
+            }
+            const payload = parseJwt(data.token);
+            if (payload && payload.rol && payload.rol === 'ADMIN') {
+                window.location.href = '/eventos';
+            } else {
+                window.location.href = '/';
+            }
         } else {
             const errorText = await response.text();
             document.getElementById('loginError').innerText = 'Error al iniciar sesión: ' + errorText;
