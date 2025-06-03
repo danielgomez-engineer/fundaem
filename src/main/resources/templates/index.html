@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fundación Deportiva Elina Morales</title>
+    <meta name="description" content="La Fundación Deportiva Elina Morales incentiva la práctica deportiva para transformar vidas de niños y jóvenes en situaciones desfavorecidas.">
+    <meta name="keywords" content="Fundación, deporte, niños, jóvenes, ayuda, transformación social">
+    <meta name="author" content="Fundación Deportiva Elina Morales">
+
+    <!-- CSS local y externos -->
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
+</head>
+<body>
+
+<header class="main-header">
+    <img th:src="@{/img/logo.jpg}" alt="Logo de la fundacion deportiva">
+    <h1>Fundación Deportiva Elina Morales</h1>
+    <p>Incentivando la práctica deportiva para transformar vidas.</p>
+</header>
+
+<nav class="main-nav">
+    <a href="#about">Quienes somos</a>
+    <a href="#galeria">Galería</a>
+    <a href="#events">Eventos</a>
+    <a href="#contact">Contacto</a>
+    <a href="#voluntariado">Voluntariado</a>
+</nav>
+
+<main>
+    <section id="welcome" class="video-container">
+        <video th:src="@{/video/video-presentacion.mp4}" type="video/mp4" controls autoplay muted loop></video>
+    </section>
+
+    <section id="about">
+        <h2>Quienes somos</h2>
+        <p id="about-text"></p>
+    </section>
+
+    <section id="mission">
+        <h2>Misión</h2>
+        <p id="about-mision"></p>
+    </section>
+
+    <section id="vision">
+        <h2>Visión</h2>
+        <p id="about-vision"></p>
+    </section>
+
+    <section id="voluntariado">
+        <h2>Voluntariado</h2>
+        <p id="descripcion"></p>
+
+        <h3>¿Cómo puedes ayudar?</h3>
+        <ul>
+            <li>📌 <strong>Entrenadores deportivos:</strong> Comparte tus conocimientos con niños y jóvenes.</li>
+            <li>📌 <strong>Apoyo logístico:</strong> Ayuda en la organización y ejecución de eventos deportivos.</li>
+        </ul>
+
+        <h3>Inscríbete ahora</h3>
+        <p>Contáctanos por WhatsApp para más información.</p>
+        <a href="https://wa.me/573022594051" class="btn-whatsapp" target="_blank">
+            <i class="fab fa-whatsapp"></i> Inscribirme como voluntario
+        </a>
+    </section>
+
+    <section id="events">
+        <h2>Eventos</h2>
+
+        <article>
+            <h3 id="tituloSombLoco"></h3>
+            <p id="descripcionSombLoco"></p>
+            <div class="video-container">
+                <video th:src="@{/video/evento1.mp4}" type="video/mp4" controls autoplay muted loop></video>
+            </div>
+        </article>
+
+        <article>
+            <h3 id="titulomaCometas"></h3>
+            <p id="descripcionCometas"></p>
+            <div class="video-container">
+                <video th:src="@{/video/evento2.mp4}" type="video/mp4" controls autoplay muted loop></video>
+            </div>
+        </article>
+
+        <article>
+            <h3 id="tituloVisita"></h3>
+            <p id="descripcionVisita"></p>
+            <div class="foto-container">
+                <img th:src="@{/img/evento3.jpg}" alt="Evento 3">
+            </div>
+        </article>
+    </section>
+
+    <section id="galeria">
+        <h2 class="gallery-title">🌟 Nuestra Galería de Momentos Especiales 📸</h2>
+        <div class="gallery">
+            <a th:href="@{/img/foto1.jpg}" data-lightbox="galeria" data-title="Niños jugando fútbol">
+                <img th:src="@{/img/foto1.jpg}" alt="Niños jugando fútbol">
+            </a>
+            <a th:href="@{/img/foto2.jpg}" data-lightbox="galeria" data-title="Evento de entrenamiento">
+                <img th:src="@{/img/foto2.jpg}" alt="Evento de entrenamiento">
+            </a>
+            <a th:href="@{/img/foto3.jpg}" data-lightbox="galeria" data-title="Entrega de uniformes">
+                <img th:src="@{/img/foto3.jpg}" alt="Entrega de uniformes">
+            </a>
+            <a th:href="@{/img/foto4.jpg}" data-lightbox="galeria" data-title="Carrera comunitaria">
+                <img th:src="@{/img/foto4.jpg}" alt="Carrera comunitaria">
+            </a>
+        </div>
+    </section>
+
+    <section id="redes-sociales">
+        <h2 class="social-title">📢 ¡Síguenos en nuestras Redes Sociales! 🌎</h2>
+        <p class="social-text">Mantente al día con nuestras actividades y eventos.</p>
+        <a href="https://linktr.ee/fundaciondeportiva.em" class="social-button">Ver Redes Sociales</a>
+    </section>
+
+    <section id="contact">
+        <h2>Contacto</h2>
+        <form>
+            <label for="name">Nombre</label>
+            <input id="name" type="text" placeholder="Nombre" required>
+            <label for="email">Correo Electrónico</label>
+            <input id="email" type="email" placeholder="Correo Electrónico" required>
+            <textarea placeholder="Mensaje" rows="5" required></textarea>
+            <button type="submit">Enviar</button>
+        </form>
+    </section>
+</main>
+
+<footer>
+    <p>&copy; 2024 Fundación Deportiva Elina Morales. Todos los derechos reservados.</p>
+    <div class="social-icons">
+        <a href="https://www.facebook.com/share/15WZ8wKSts/" target="_blank"><i class="fab fa-facebook"></i></a>
+        <a href="https://www.instagram.com/fundaciondeportivaelinamorales/" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="https://wa.me/573022594051" target="_blank"><i class="fab fa-whatsapp"></i></a>
+    </div>
+</footer>
+
+<!-- JS -->
+<script th:src="@{/js/script.js}"></script>
+
+</body>
+</html>

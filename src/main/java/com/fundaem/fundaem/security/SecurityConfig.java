@@ -33,7 +33,12 @@ public class SecurityConfig {
         return http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/**", "/api/usuarios").permitAll()
+                        .requestMatchers(
+                                "/", "/index.html",
+                                "/css/**", "/js/**", "/img/**", "/video/**",
+                                "/**/*.jpg", "/**/*.png", "/**/*.mp4",
+                                "/api/auth/**", "/api/usuarios"
+                        ).permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -41,6 +46,7 @@ public class SecurityConfig {
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
+
 
     @Bean
     public AuthenticationProvider authenticationProvider() {

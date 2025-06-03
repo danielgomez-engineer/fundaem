@@ -68,4 +68,17 @@ public class EventoServiceImpl  implements EventoService {
         eventoRepository.deleteById(id);
 
     }
+
+    @Override
+    public void actualizarEvento(Long id, EventoRequestDTO request) {
+        Evento evento = eventoRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Evento no encontrado con ID: " + id));
+
+        // Usamos ModelMapper para mapear los nuevos valores al evento existente
+        modelMapper.map(request, evento);
+
+        eventoRepository.save(evento);
+    }
+
+
 }

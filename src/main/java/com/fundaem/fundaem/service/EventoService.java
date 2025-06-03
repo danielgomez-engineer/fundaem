@@ -16,5 +16,8 @@ public interface EventoService {
 
     void eliminarEvento(Long id);
 
+    void actualizarEvento(Long id, EventoRequestDTO request);
+
+
 
 }
