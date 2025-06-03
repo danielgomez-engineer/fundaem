@@ -1,6 +1,5 @@
 package com.fundaem.fundaem.controller;
 
-
 import com.fundaem.fundaem.dto.request.EventoRequestDTO;
 import com.fundaem.fundaem.dto.response.EventoResponseDTO;
 import com.fundaem.fundaem.service.EventoService;
@@ -20,7 +19,7 @@ public class EventoController {
     private final EventoService eventoService;
 
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/{creadorId}")
+    @PostMapping
     public ResponseEntity<EventoResponseDTO> crearEvento(@Valid @RequestBody EventoRequestDTO request) {
         EventoResponseDTO response = eventoService.crearEvento(request);
         return ResponseEntity.ok(response);

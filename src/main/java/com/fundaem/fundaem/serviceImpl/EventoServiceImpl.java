@@ -25,8 +25,10 @@ public class EventoServiceImpl  implements EventoService {
 
     @Override
     public EventoResponseDTO crearEvento(EventoRequestDTO request) {
-
-        Usuario creador = usuarioRepository.findById(request.getCreador_id())
+        // Obtener el usuario autenticado
+        org.springframework.security.core.Authentication authentication = org.springframework.security.core.context.SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        Usuario creador = usuarioRepository.findByEmail(email)
                 .orElseThrow(() -> new NotFoundException("Usuario no encontrado"));
 
         Evento evento = modelMapper.map(request, Evento.class);
@@ -35,6 +37,7 @@ public class EventoServiceImpl  implements EventoService {
 
         EventoResponseDTO response = modelMapper.map(guardado, EventoResponseDTO.class);
         response.setCreadorNombre(creador.getNombre());
+        response.setCreador_id(creador.getId());
         return response;
     }
 
