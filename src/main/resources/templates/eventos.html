@@ -12,7 +12,45 @@
         <h2 class="mb-4">Eventos Públicos</h2>
 
         <div class="mb-4" id="botonCrearContainer" style="display: none;">
-            <a href="/eventos/crear" class="btn btn-success">Crear Nuevo Evento</a>
+            <button class="btn btn-success" onclick="abrirModalEvento()">Crear Nuevo Evento</button>
+        </div>
+        <div id="eventoMensaje"></div>
+
+        <div class="modal fade" id="modalEvento" tabindex="-1" aria-labelledby="modalEventoLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form id="eventoForm">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalEventoLabel">Crear/Editar Evento</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <input type="hidden" id="eventoId">
+                            <div class="mb-3">
+                                <label for="titulo" class="form-label">Título</label>
+                                <input type="text" class="form-control" id="titulo" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="descripcion" class="form-label">Descripción</label>
+                                <textarea class="form-control" id="descripcion" required></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="fecha" class="form-label">Fecha</label>
+                                <input type="date" class="form-control" id="fecha" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="imagenUrl" class="form-label">Imagen URL</label>
+                                <input type="text" class="form-control" id="imagenUrl" required>
+                            </div>
+                            <div id="eventoFormError" class="text-danger"></div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
 
         <div id="listaEventos" class="row gy-4">
@@ -61,12 +99,20 @@
                     const div = document.createElement("div");
                     div.classList.add("col-md-6");
 
+                    let adminBtns = '';
+                    if (esAdmin) {
+                        adminBtns = `
+                            <button class='btn btn-warning btn-sm me-2' onclick='abrirModalEvento(${JSON.stringify(evento)})'>Editar</button>
+                            <button class='btn btn-danger btn-sm' onclick='eliminarEvento(${evento.id})'>Eliminar</button>
+                        `;
+                    }
                     div.innerHTML = `
                     <div class="card shadow">
                         <div class="card-body">
                             <h5 class="card-title">${evento.titulo}</h5>
                             <p class="card-text">${evento.descripcion}</p>
                             <p class="text-muted">Fecha: ${evento.fecha}</p>
+                            ${adminBtns}
                         </div>
                     </div>
                 `;
@@ -77,11 +123,92 @@
             }
         }
 
-        document.addEventListener("DOMContentLoaded", () => {
+        // Modal helpers
+        let modalEvento;
+        let esAdmin = false;
+        document.addEventListener("DOMContentLoaded", async () => {
+            esAdmin = false;
+            modalEvento = new bootstrap.Modal(document.getElementById('modalEvento'));
+            await verificarAdmin();
             cargarEventos();
-            // mostrarBotonCrearSiEsAdmin();
         });
+
+        async function verificarAdmin() {
+            esAdmin = false;
+            document.getElementById("botonCrearContainer").style.display = "none";
+            if (!token) return;
+            try {
+                // Si puede acceder a /api/eventos con el token, lo consideramos admin
+                const res = await fetch("/api/eventos", {
+                    headers: { "Authorization": `Bearer ${token}` }
+                });
+                if (res.status !== 403) {
+                    esAdmin = true;
+                    document.getElementById("botonCrearContainer").style.display = "block";
+                }
+            } catch { }
+        }
+
+        function abrirModalEvento(evento = null) {
+            document.getElementById('eventoFormError').innerText = '';
+            document.getElementById('eventoForm').reset();
+            document.getElementById('eventoId').value = evento && evento.id ? evento.id : '';
+            document.getElementById('titulo').value = evento && evento.titulo ? evento.titulo : '';
+            document.getElementById('descripcion').value = evento && evento.descripcion ? evento.descripcion : '';
+            document.getElementById('fecha').value = evento && evento.fecha ? evento.fecha : '';
+            document.getElementById('imagenUrl').value = evento && evento.imagenUrl ? evento.imagenUrl : '';
+            modalEvento.show();
+        }
+
+        document.getElementById('eventoForm').onsubmit = async function (e) {
+            e.preventDefault();
+            const id = document.getElementById('eventoId').value;
+            const payload = {
+                titulo: document.getElementById('titulo').value,
+                descripcion: document.getElementById('descripcion').value,
+                fecha: document.getElementById('fecha').value,
+                imagenUrl: document.getElementById('imagenUrl').value
+            };
+            const headers = { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` };
+            try {
+                let resp;
+                let mensaje = '';
+                if (id) {
+                    resp = await fetch(`/api/eventos/${id}`, { method: 'PUT', headers, body: JSON.stringify(payload) });
+                    mensaje = 'Evento actualizado correctamente.';
+                } else {
+                    resp = await fetch('/api/eventos', { method: 'POST', headers, body: JSON.stringify(payload) });
+                    mensaje = 'Evento creado correctamente.';
+                }
+                if (!resp.ok) throw new Error(await resp.text());
+                modalEvento.hide();
+                mostrarMensaje(mensaje, 'success');
+                cargarEventos();
+            } catch (err) {
+                document.getElementById('eventoFormError').innerText = err;
+            }
+        };
+
+        function mostrarMensaje(msg, tipo) {
+            const div = document.getElementById('eventoMensaje');
+            div.innerHTML = `<div class='alert alert-${tipo} alert-dismissible fade show' role='alert'>${msg}<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button></div>`;
+        }
+
+        async function eliminarEvento(id) {
+            if (!confirm('¿Seguro que deseas eliminar este evento?')) return;
+            try {
+                const headers = { 'Authorization': `Bearer ${token}` };
+                const resp = await fetch(`/api/eventos/${id}`, { method: 'DELETE', headers });
+                if (!resp.ok) throw new Error('No se pudo eliminar el evento');
+                mostrarMensaje('Evento eliminado correctamente.', 'success');
+                cargarEventos();
+            } catch (err) {
+                mostrarMensaje('Error al eliminar el evento', 'danger');
+            }
+        }
     </script>
+    <!-- Bootstrap JS Bundle (incluye Popper) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
