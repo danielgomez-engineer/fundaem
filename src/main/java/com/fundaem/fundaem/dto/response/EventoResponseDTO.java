@@ -18,6 +18,5 @@ public class EventoResponseDTO {
     private LocalDate fecha;
     private String imagenUrl;
     private Boolean activo;
-    private String creadorNombre;
-    private Long creador_id;
+    private UsuarioResponseDTO creador;
 }

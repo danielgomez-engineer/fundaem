@@ -42,4 +42,11 @@ public class EventoController {
         return ResponseEntity.noContent().build();
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/{id}")
+    public ResponseEntity<EventoResponseDTO> actualizar(@PathVariable Long id, @Valid @RequestBody EventoRequestDTO request) {
+        EventoResponseDTO response = eventoService.actualizarEvento(id, request);
+        return ResponseEntity.ok(response);
+    }
+
 }

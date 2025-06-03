@@ -2,6 +2,7 @@ package com.fundaem.fundaem.serviceImpl;
 
 import com.fundaem.fundaem.dto.request.EventoRequestDTO;
 import com.fundaem.fundaem.dto.response.EventoResponseDTO;
+import com.fundaem.fundaem.dto.response.UsuarioResponseDTO;
 import com.fundaem.fundaem.exception.NotFoundException;
 import com.fundaem.fundaem.model.Evento;
 import com.fundaem.fundaem.model.Usuario;
@@ -36,8 +37,14 @@ public class EventoServiceImpl  implements EventoService {
         Evento guardado = eventoRepository.save(evento);
 
         EventoResponseDTO response = modelMapper.map(guardado, EventoResponseDTO.class);
-        response.setCreadorNombre(creador.getNombre());
-        response.setCreador_id(creador.getId());
+        // Mapear el usuario creador a UsuarioResponseDTO
+        UsuarioResponseDTO creadorDto = UsuarioResponseDTO.builder()
+            .id(creador.getId())
+            .nombre(creador.getNombre())
+            .email(creador.getEmail())
+            .rol(creador.getRol())
+            .build();
+        response.setCreador(creadorDto);
         return response;
     }
 
@@ -46,7 +53,14 @@ public class EventoServiceImpl  implements EventoService {
         return eventoRepository.findAll().stream()
                 .map(evento -> {
                     EventoResponseDTO dto = modelMapper.map(evento, EventoResponseDTO.class);
-                    dto.setCreadorNombre(evento.getCreador().getNombre());
+                    Usuario creador = evento.getCreador();
+                    UsuarioResponseDTO creadorDto = UsuarioResponseDTO.builder()
+                        .id(creador.getId())
+                        .nombre(creador.getNombre())
+                        .email(creador.getEmail())
+                        .rol(creador.getRol())
+                        .build();
+                    dto.setCreador(creadorDto);
                     return dto;
                 })
                 .collect(Collectors.toList());
@@ -58,7 +72,14 @@ public class EventoServiceImpl  implements EventoService {
         Evento evento = eventoRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Evento no encontrado"));
         EventoResponseDTO dto = modelMapper.map(evento, EventoResponseDTO.class);
-        dto.setCreadorNombre(evento.getCreador().getNombre());
+        Usuario creador = evento.getCreador();
+        UsuarioResponseDTO creadorDto = UsuarioResponseDTO.builder()
+            .id(creador.getId())
+            .nombre(creador.getNombre())
+            .email(creador.getEmail())
+            .rol(creador.getRol())
+            .build();
+        dto.setCreador(creadorDto);
         return dto;
     }
 
@@ -73,14 +94,25 @@ public class EventoServiceImpl  implements EventoService {
     }
 
     @Override
-    public void actualizarEvento(Long id, EventoRequestDTO request) {
+    public EventoResponseDTO actualizarEvento(Long id, EventoRequestDTO request) {
         Evento evento = eventoRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Evento no encontrado con ID: " + id));
 
         // Usamos ModelMapper para mapear los nuevos valores al evento existente
         modelMapper.map(request, evento);
 
-        eventoRepository.save(evento);
+        Evento guardado = eventoRepository.save(evento);
+        // Mapear el usuario creador a UsuarioResponseDTO
+        Usuario creador = evento.getCreador();
+        UsuarioResponseDTO creadorDto = UsuarioResponseDTO.builder()
+            .id(creador.getId())
+            .nombre(creador.getNombre())
+            .email(creador.getEmail())
+            .rol(creador.getRol())
+            .build();
+        EventoResponseDTO response = modelMapper.map(guardado, EventoResponseDTO.class);
+        response.setCreador(creadorDto);
+        return response;
     }
 
 
