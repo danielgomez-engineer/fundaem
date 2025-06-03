@@ -52,8 +52,20 @@
 
         const msg = document.getElementById('registerMessage');
         if (response.ok) {
-            msg.className = 'text-success';
-            msg.innerText = 'Registro exitoso. Ahora puedes iniciar sesión.';
+            // Login automático tras registro exitoso
+            const loginResp = await fetch('/api/auth/login', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ email: payload.email, password: payload.password })
+            });
+            if (loginResp.ok) {
+                const loginData = await loginResp.json();
+                localStorage.setItem('token', loginData.token);
+                window.location.href = '/eventos';
+            } else {
+                msg.className = 'text-warning';
+                msg.innerText = 'Registro exitoso, pero error al iniciar sesión automáticamente.';
+            }
         } else {
             const error = await response.text();
             msg.className = 'text-danger';

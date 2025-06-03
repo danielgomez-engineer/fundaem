@@ -28,7 +28,9 @@ public class SecurityConfig {
             "/", "/index.html",
             "/css/**", "/js/**", "/img/**", "/video/**",
             "/api/auth/**", "/api/usuarios",
-            "/login", "/register"
+            "/login", "/register",
+            // Rutas de vistas de eventos
+            "/eventos", "/eventos/nuevo", "/eventos/editar/**"
     };
     // Rutas solo para administradores
     public static final String[] ADMIN_ROUTES = {

@@ -10,8 +10,8 @@
     <h2>Iniciar Sesión</h2>
     <form id="loginForm">
         <div class="mb-3">
-            <label for="username" class="form-label">Usuario</label>
-            <input type="text" class="form-control" id="username" name="username" required/>
+            <label for="email" class="form-label">Correo electrónico</label>
+            <input type="email" class="form-control" id="email" name="email" required/>
         </div>
         <div class="mb-3">
             <label for="password" class="form-label">Contraseña</label>
@@ -26,13 +26,13 @@
     document.getElementById('loginForm').addEventListener('submit', async function (e) {
         e.preventDefault();
 
-        const username = document.getElementById('username').value;
+        const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
 
         const response = await fetch('/api/auth/login', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({username, password})
+            body: JSON.stringify({email, password})
         });
 
         if (response.ok) {

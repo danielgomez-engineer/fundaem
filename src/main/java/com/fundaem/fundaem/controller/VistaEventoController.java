@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import jakarta.validation.Valid;
 
 @Controller
 public class VistaEventoController {
@@ -35,7 +36,11 @@ public class VistaEventoController {
 
     // ✅ Procesar nuevo evento
     @PostMapping("/eventos")
-    public String guardarEvento(@ModelAttribute EventoRequestDTO eventoDTO) {
+    public String guardarEvento(@Valid @ModelAttribute("evento") EventoRequestDTO eventoDTO, org.springframework.validation.BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            // Si hay errores de validación, vuelve al formulario
+            return "evento-crear";
+        }
         eventoService.crearEvento(eventoDTO);
         return "redirect:/eventos";
     }
@@ -50,7 +55,12 @@ public class VistaEventoController {
 
     // ✅ Procesar edición del evento
     @PostMapping("/eventos/editar/{id}")
-    public String actualizarEvento(@PathVariable Long id, @ModelAttribute EventoRequestDTO eventoDTO) {
+    public String actualizarEvento(@PathVariable Long id, @Valid @ModelAttribute("evento") EventoRequestDTO eventoDTO, org.springframework.validation.BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            // Si hay errores de validación, vuelve al formulario de edición
+            model.addAttribute("evento", eventoDTO);
+            return "evento-editar";
+        }
         eventoService.actualizarEvento(id, eventoDTO);
         return "redirect:/eventos";
     }
