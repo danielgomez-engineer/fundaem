@@ -35,7 +35,6 @@ target/
 Thumbs.db
 
 # === Configuración sensible o local ===
-application.properties
 application.yml
 .env
 
