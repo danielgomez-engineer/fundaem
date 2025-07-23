@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+    <title>Eventos - Administrador</title>
+</head>
+<body>
+<main layout:fragment="content">
+    <section class="section-content">
+        <h2>Administrar Eventos</h2>
+        <a href="/eventos/new" class="btn btn-primary">+ Crear Nuevo Evento</a>
+
+        <div class="event-grid">
+            <div class="event-card admin-card" th:each="evento : ${eventos}">
+                <div class="event-info">
+                    <h3 th:text="${evento.nombreEvento}"></h3>
+                    <p th:text="${evento.descripcion}"></p>
+                    <p class="event-date">📅 <span th:text="${evento.fechaCreacion}"></span></p>
+
+                    <div class="event-actions">
+                        <a th:href="@{'/eventos/editar/' + ${evento.id}}" class="btn btn-edit">Editar</a>
+
+                        <!-- Botón que abre el modal -->
+                        <button type="button" class="btn btn-delete"
+                                th:attr="data-id=${evento.id}"
+                                onclick="openDeleteModal(this)">
+                            Eliminar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Fragmento del modal de confirmación de eliminación -->
+    <div th:replace="layout/fragments/modals :: deleteModal"></div>
+</main>
+</body>
+</html>

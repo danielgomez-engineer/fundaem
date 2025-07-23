@@ -1,0 +1,28 @@
+<div th:fragment="navbar" xmlns:sec="http://www.w3.org/1999/xhtml">
+    <nav class="navbar">
+        <div class="navbar-left">
+            <a href="/">Inicio</a>
+            <a href="/#about">Quiénes somos</a>
+            <a href="/eventos">Eventos</a>
+            <a href="/#contactos">Contactos</a>
+            <a href="/#voluntariado">Voluntariado</a>
+        </div>
+
+        <div class="navbar-right">
+            <div sec:authorize="hasRole('ADMIN')">
+                <a href="/admin/eventos">Administrar Eventos</a>
+            </div>
+
+            <div sec:authorize="isAnonymous()">
+                <a href="/login" class="btn login">Iniciar sesión</a>
+                <a href="/register" class="btn register">Registrarse</a>
+            </div>
+
+            <div sec:authorize="isAuthenticated()">
+                <form th:action="@{/logout}" method="post">
+                    <button type="submit" class="btn logout">Cerrar sesión</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+</div>

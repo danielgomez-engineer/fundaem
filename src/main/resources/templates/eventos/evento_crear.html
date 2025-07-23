@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+    <title>Crear Evento</title>
+</head>
+<body>
+<main layout:fragment="content">
+    <section class="form-container">
+        <h2>Crear Nuevo Evento</h2>
+
+        <form th:action="@{/eventos}" th:object="${evento}" method="post" class="form-box">
+            <label for="name">Nombre del Evento</label>
+            <input type="text" id="name" th:field="*{nombreEvento}" required>
+            <p class="form-error" th:if="${#fields.hasErrors('nombreEvento')}" th:errors="*{nombreEvento}"></p>
+
+            <label for="descripcion">Descripción</label>
+            <input type="text" id="descripcion" th:field="*{descripcion}" required>
+            <p class="form-error" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"></p>
+
+            <label for="fechaCreacion">Fecha de Creación</label>
+            <input type="date" id="fechaCreacion" th:field="*{fechaCreacion}" required>
+            <p class="form-error" th:if="${#fields.hasErrors('fechaCreacion')}" th:errors="*{fechaCreacion}"></p>
+
+            <label for="urlVideo">URL del Video</label>
+            <input type="url" id="urlVideo" th:field="*{urlVideo}">
+            <p class="form-error" th:if="${#fields.hasErrors('urlVideo')}" th:errors="*{urlVideo}"></p>
+
+            <div class="form-actions">
+                <button type="submit" class="btn">Crear</button>
+                <a th:href="@{/admin/eventos}" class="btn btn-warning">Cancelar</a>
+            </div>
+        </form>
+    </section>
+</main>
+</body>
+</html>

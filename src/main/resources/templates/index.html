@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+
+<main layout:fragment="content">
+
+    <!-- VIDEO -->
+    <section class="video-container">
+        <video th:src="@{/video/video-presentacion.mp4}" type="video/mp4" controls autoplay muted loop></video>
+    </section>
+
+    <!-- QUIÉNES SOMOS -->
+    <section class="section-content with-image" id="about">
+        <div class="section-image">
+            <img th:src="@{/img/quienes_somos.jpg}" alt="Quiénes Somos">
+        </div>
+        <div class="section-text">
+            <h2>¿Quiénes Somos?</h2>
+            <p>
+                La Fundación Deportiva Elina Morales tiene como objetivo incentivar la práctica deportiva con el fin de
+                llegar a aquellos niños y jóvenes en situaciones desfavorecidas, sin recursos o con discapacidad, apoyándolos socialmente.
+            </p>
+        </div>
+    </section>
+
+
+    <!-- MISIÓN -->
+    <section class="section-content with-image">
+        <div class="section-image">
+            <img th:src="@{/img/mision.jpg}" alt="Mision">
+        </div>
+        <div class="section-text">
+            <h2>Misión</h2>
+            <p>
+                Mejorar la calidad de vida de deportistas de bajos recursos mediante formación, desarrollo y rehabilitación deportiva,
+                con el apoyo de voluntarios y profesionales comprometidos.
+            </p>
+        </div>
+    </section>
+
+    <!-- VISIÓN -->
+    <section class="section-content with-image">
+        <div class="section-image">
+            <img th:src="@{/img/vision.jpg}" alt="Vision">
+        </div>
+        <div class="section-text">
+            <h2>Visión</h2>
+            <p>
+                Ser una fundación reconocida por su impacto en la comunidad, formando atletas integrales y sostenibles,
+                en colaboración con patrocinadores y entidades públicas y privadas.
+            </p>
+        </div>
+    </section>
+
+    <!-- VOLUNTARIADO -->
+    <section class="section-content" id="voluntariado">
+        <h2>Voluntariado</h2>
+        <p>Únete a nuestro equipo y ayuda a transformar vidas a través del deporte.</p>
+        <h3>¿Cómo puedes ayudar?</h3>
+        <ul class="voluntariado-list">
+            <li><strong>📌 Entrenadores deportivos:</strong> Comparte tus conocimientos con niños y jóvenes.</li>
+            <li><strong>📌 Apoyo logístico:</strong> Ayuda en la organización y ejecución de eventos deportivos.</li>
+        </ul>
+        <a href="https://wa.me/573022594051" class="btn-whatsapp" target="_blank">
+            <i class="fab fa-whatsapp"></i> Inscribirme como voluntario
+        </a>
+    </section>
+
+    <!-- EVENTOS -->
+    <section class="section-content">
+        <h2>Eventos</h2>
+        <div class="event-grid">
+            <div class="event-card" th:each="evento : ${eventos}">
+                <div class="event-info">
+                    <h3 th:text="${evento.nombreEvento}"></h3>
+                    <p th:text="${evento.descripcion}"></p>
+                    <p class="event-date">
+                        📅 <span th:text="${evento.fechaCreacion}"></span>
+                    </p>
+                    <a th:href="${evento.urlVideo}" target="_blank" class="btn-ver-video">
+                        🎥 Ver video del evento
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-right">
+            <a href="/eventos" class="btn-ver-todos">Ver todos los eventos</a>
+        </div>
+    </section>
+
+
+
+    <!-- REDES SOCIALES -->
+    <section class="section-content" id="redes-sociales">
+        <h2>📢 ¡Síguenos en nuestras Redes Sociales!</h2>
+        <p>Mantente al día con nuestras actividades y eventos.</p>
+        <a href="https://linktr.ee/fundaciondeportiva.em" class="social-button" target="_blank">Ver Redes Sociales</a>
+    </section>
+
+    <!-- CONTACTO -->
+    <section class="section-content" id="contactos">
+        <h2>Contacto</h2>
+        <form action="https://formspree.io/f/xeozjpbk" method="POST" class="contact-form">
+            <label for="name">Nombre</label>
+            <input id="name" name="name" type="text" placeholder="Nombre" required>
+
+            <label for="email">Correo Electrónico</label>
+            <input id="email" name="email" type="email" placeholder="Correo Electrónico" required>
+
+            <label for="message">Mensaje</label>
+            <textarea id="message" name="message" placeholder="Mensaje" rows="5" required></textarea>
+
+            <button type="submit" class="btn">Enviar</button>
+        </form>
+    </section>
+
+</main>
+</html>

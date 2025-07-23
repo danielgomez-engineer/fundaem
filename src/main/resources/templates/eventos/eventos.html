@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+    <title>Eventos</title>
+</head>
+<body>
+<div layout:fragment="content">
+
+    <section class="section-content">
+        <h2>Eventos</h2>
+        <div class="event-grid">
+            <div class="event-card" th:each="evento : ${eventos}">
+                <div class="event-info">
+                    <h3 th:text="${evento.nombreEvento}"></h3>
+                    <p th:text="${evento.descripcion}"></p>
+                    <p class="event-date">
+                        📅 <span th:text="${evento.fechaCreacion}"></span>
+                    </p>
+                    <a th:href="${evento.urlVideo}" target="_blank" class="btn-ver-video">
+                        🎥 Ver video del evento
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-right">
+            <a href="/" class="btn-ver-todos">Volver al inicio</a>
+        </div>
+    </section>
+
+</div>
+</body>
+</html>
+
+

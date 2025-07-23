@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Fundaem</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Fuentes y estilos -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body class="main-body">
+
+<header>
+    <div th:replace="layout/fragments/header :: header"></div>
+</header>
+
+<nav>
+    <div th:replace="layout/fragments/navbar :: navbar"></div>
+</nav>
+
+<main class="main-content" layout:fragment="content">
+    <!-- Aquí se inyectan las vistas -->
+</main>
+
+<footer>
+    <div th:replace="layout/fragments/footer :: footer"></div>
+</footer>
+
+</body>
+</html>

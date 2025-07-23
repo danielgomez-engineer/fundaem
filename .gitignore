@@ -1,0 +1,43 @@
+# === Maven ===
+target/
+*.log
+*.tmp
+*.bak
+
+# === IDEs ===
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Eclipse / Spring Tool Suite (STS)
+.classpath
+.project
+.settings/
+.apt_generated/
+.factorypath
+.springBeans
+.sts4-cache/
+
+# NetBeans
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+# VS Code
+.vscode/
+
+# === Sistema Operativo ===
+.DS_Store
+Thumbs.db
+
+# === Configuración sensible o local ===
+application.properties
+application.yml
+.env
+
+# === Otros archivos generados ===
+HELP.md
