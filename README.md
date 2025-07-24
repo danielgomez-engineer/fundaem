@@ -1,33 +1,64 @@
-# Fundaem Backend
+# 🌐 Fundaem - Aplicación Web
 
-Este es el backend de la aplicación web Fundaem, desarrollado con Spring Boot, Hibernate y JPA.
+**Fundaem** es una aplicación web para la gestión de eventos de una fundación sin fines de lucro. Esta versión incluye el frontend construido con **Spring Boot + Thymeleaf**, integrando vistas dinámicas y conexión directa al backend desplegado.
 
-## Tecnologías
+---
 
-- Java 17
-- Spring Boot 3.x
-- Hibernate / JPA
-- Maven
-- Postgresql
-- Render (despliegue)
+## 🧩 Tecnologías utilizadas
 
-## Cómo ejecutar
+- **Java 17**
+- **Spring Boot 3.x**
+- **Thymeleaf (Motor de plantillas)**
+- **Spring MVC**
+- **Hibernate / JPA**
+- **PostgreSQL**
+- **Render (despliegue)**
+
+---
+
+## 🚀 ¿Qué hace esta aplicación?
+
+- Permite iniciar sesión como administrador o cliente
+- Gestión de eventos (listar, crear, editar, eliminar)
+- Validaciones de formularios
+- Vistas dinámicas renderizadas con Thymeleaf
+- Integración directa con base de datos y capa de seguridad
+
+---
+
+## 🖥️ Ver en producción
+
+🔗 [https://fundaem.onrender.com/](https://fundaem.onrender.com/)
+
+---
+
+## 📥 Cómo ejecutar localmente
+
+1. Clona el repositorio
 
 ```bash
-
-mvn clean install
-java -jar target/fundaem-0.0.1-SNAPSHOT.jar
+git clone https://github.com/danielgomez-engineer/fundaem-frontend.git
+cd fundaem-frontend
 ```
 
-link del proyecto
+2. Configura tu base de datos en application.properties:
 
-https://fundaem.onrender.com/
+```bash
+spring.datasource.url=jdbc:postgresql://localhost:5432/fundaem_db
+spring.datasource.username=tu_usuario
+spring.datasource.password=tu_contraseña
+```
 
-Autor
+3. Ejecuta el proyecto:
+
+```bash
+./mvnw spring-boot:run
+```
+
+👨‍💻 Autor
 
 Daniel Felipe Gómez Ferreira
-
-
-
-
+📧 danielf23.dev@gmail.com
+🔗 GitHub
+🔗 Portafolio (próximamente)
 
