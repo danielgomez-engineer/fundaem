@@ -59,6 +59,8 @@ spring.datasource.password=tu_contraseña
 
 Daniel Felipe Gómez Ferreira
 📧 danielf23.dev@gmail.com
+
 🔗 GitHub
+
 🔗 Portafolio (próximamente)
 
